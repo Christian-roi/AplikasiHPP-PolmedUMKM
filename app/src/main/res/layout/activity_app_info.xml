@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/infobg"
+    tools:context=".AppInfo">
+
+    <ImageView
+        android:id="@+id/banner"
+        android:layout_width="300dp"
+        android:layout_height="160dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_below="@+id/banner">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Petunjuk Penggunaan"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textSize="22sp"
+                android:textColor="#FFF" />
+
+            <me.biubiubiu.justifytext.library.JustifyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:text="Aplikasi Hitung Harga Pokok Penjualan ini merupakan alat bantu yang dirancang untuk membantu Anda menghitung Harga Pokok Penjualan (HPP) dengan mudah dan akurat."
+                android:textColor="#FFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cara Menggunakan Aplikasi:"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:textSize="16sp"
+                android:textColor="#FFF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:textSize="13sp"
+                android:textColor="#FFF"
+                android:text="1. Masukkan nilai biaya biaya yang diperlukan pada seluruh rangkaian form, jika nilai tidak ada hendak mengisi kolom dengan nilai 0." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:textSize="13sp"
+                android:textColor="#FFF"
+                android:text="2. Sistem secara otomatis menghitung keseluruhan biaya untuk menghasilkan Harga Pokok Penjualan." />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:textSize="13sp"
+                android:textColor="#FFF"
+                android:text="3. Pada Halaman Hasil Perhitungan Anda dapat melakukan Cetak Dokumen PDF untuk melihat rincian dari hasil perhitungan" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:textSize="13sp"
+                android:textColor="#FFF"
+                android:text="4. Pada Menu Tentang UMKM berada informasi tentang UMKM." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:textSize="13sp"
+                android:textColor="#FFF"
+                android:text="5. Pada Menu Riwayat anda dapat melihat perhitungan yang telah anda lakukan sebelumnya, dan anda dapat mencetak kembali berkas anda." />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

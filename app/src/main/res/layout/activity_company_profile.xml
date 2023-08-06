@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/umkmbg"
+    tools:context=".CompanyProfile">
+
+    <ImageView
+        android:id="@+id/banner"
+        android:layout_width="300dp"
+        android:layout_height="175dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/banner">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UMKM Rumah Tape"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:textSize="24sp"
+                android:textColor="#FFF" />
+
+            <me.biubiubiu.justifytext.library.JustifyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:text="UMKM Rumah Tape adalah usaha kecil menengah (UMKM) yang bergerak di bidang makanan dan minuman khas Indonesia, dengan fokus pada produk tape tradisional. Terletak di sebuah desa yang indah dan tenang, Rumah Tape menjadi destinasi favorit para pecinta kuliner yang ingin menikmati kelezatan dan keunikan dari tape, salah satu makanan tradisional yang sangat disukai di Indonesia."
+                android:textColor="#FFF"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/infoumkm" />
+
+            <me.biubiubiu.justifytext.library.JustifyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rumah Tape berkomitmen untuk melestarikan keberlanjutan warisan kuliner Indonesia, terutama dalam tradisi pembuatan tape. Mereka bekerja sama dengan petani lokal untuk mendapatkan bahan-bahan berkualitas tinggi yang berasal dari lingkungan yang berkelanjutan. \nSelain itu, Rumah Tape juga memberdayakan perempuan di desa sekitar untuk turut serta dalam proses produksi, menciptakan dampak positif bagi masyarakat setempat."
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:textSize="14sp"
+                android:textColor="#FFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Galeri UMKM"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:textSize="16sp"
+                android:textColor="#FFF"/>
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/infoumkm" />
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/infoumkm"
+                />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

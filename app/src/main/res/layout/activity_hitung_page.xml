@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hitungbg"
+    tools:context=".HitungPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:text="Form Perhitungan Harga Pokok Penjualan"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Isilah Nominal Dibawah ini dengan Benar. \nJika Nominal tidak ada isikan dengan angka 0."
+            android:textStyle="bold"
+            android:textColor="@color/danger"
+            android:textSize="11sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama UMKM"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valNama"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="textFilter"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nama UMKM Anda"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:text="Biaya Bahan Baku"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Persediaan Bahan Baku Awal (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valBakuAwal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:maxLength="15"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Pembelian Bahan Baku Bersih :"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="#000"-->
+<!--            android:textSize="16sp"-->
+<!--            tools:ignore="HardcodedText" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pembelian Bahan Baku (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valBeliBhn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Transportasi (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valTransport"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Diskon Pembelian (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valDiskon"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Retur Pembelian (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valRetur"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,DuplicateIds,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Persediaan Bahan Baku Akhir (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valBakuAkhir"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Biaya Produksi &amp; Overhead Pabrik"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Tenaga Kerja Langsung (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valPekerja"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Tenaga Kerja Tidak Langsung (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valPkrjaTdkLgsg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Bahan Penolong (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valPenolong"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Listrik (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valListirk"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Air (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valAir"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Komunikasi (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valKom"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Penyusutan (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valPenyusutan"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya Lain - Lain (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valLain2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Harga Pokok Produksi"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Persediaan Barang dalam Proses Awal (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valProAwal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Persediaan Barang dalam Proses Akhir (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valProAkhir"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Harga Pokok Penjualan"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Persediaan Barang Jadi Awal (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valJadiAwal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Persediaan Barang Jadi Akhir (Rp.)"
+            android:textColor="#000"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/valJadiAkhir"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:background="@drawable/field_border"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:hint="Masukkan Nominal Rupiah"
+            tools:ignore="Autofill,LabelFor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnHitung"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/btnprimary"
+                android:text=" Hitung"
+                android:drawableLeft="@drawable/calc"
+                android:textColor="#FFF"
+                android:layout_marginRight="30dp"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnKembali"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/danger_button"
+                android:text=" Kembali"
+                android:drawableLeft="@drawable/back"
+                android:textColor="#FFF"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

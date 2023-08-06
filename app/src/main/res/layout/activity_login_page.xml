@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="30dp"
+    android:background="@drawable/bgmain1"
+    android:layout_height="match_parent"
+    tools:context=".LoginPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:adjustViewBounds="true"
+            android:fitsSystemWindows="true"
+            android:src="@drawable/logo"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textStyle="bold"
+            android:textColor="#FFF"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/etUserid"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textColor="#000"
+            android:textSize="14sp"
+            android:paddingLeft="5dp"
+            android:maxLines="1"
+            android:drawableLeft="@drawable/akun"
+            android:textColorHint="@android:color/darker_gray"
+            android:background="@drawable/field_border"
+            android:hint="Masukkan Username Anda"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Password"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:inputType="textPassword"
+            android:textColor="#000"
+            android:textSize="14sp"
+            android:textColorHint="@android:color/darker_gray"
+            android:background="@drawable/field_border"
+            android:drawableLeft="@drawable/psd"
+            android:paddingLeft="5dp"
+            android:hint="Masukkan Password Anda"
+            tools:ignore="Autofill,LabelFor" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btLogin"
+            android:layout_width="165dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_color_blue"
+            android:text="Login"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:textColor="#FFF"
+            android:drawableLeft="@drawable/exitapp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btRegister"
+            android:layout_width="165dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btnprimary"
+            android:text="Register"
+            android:padding="10dp"
+            android:drawableLeft="@drawable/reg"
+            android:textColor="#FFF"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+</ScrollView>

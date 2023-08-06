@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:background="@drawable/hitungbg"
+    tools:context=".DetailHistory">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Hasil Perhitungan\nHarga Pokok Penjualan"
+            android:textStyle="bold"
+            android:textColor="#555"
+            android:textSize="14sp"
+            android:textAllCaps="true"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/valNama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Nama UMKM"
+            android:textStyle="bold"
+            android:textColor="#555"
+            android:textSize="14sp"
+            android:textAllCaps="true"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:background="@drawable/button_color_blue"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Biaya Bahan Baku"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/resBhnBaku"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="15dp"
+                android:text="Biaya Bahan Baku"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:background="@drawable/field_border"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:background="@drawable/button_color1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Total Biaya Produksi"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/resProduksi"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="15dp"
+                android:text="Biaya Bahan Baku"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:background="@drawable/field_border"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:background="@drawable/button_color_blue"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Harga Pokok Produksi"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/resPokPro"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="15dp"
+                android:text="Biaya Bahan Baku"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:background="@drawable/field_border"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center"
+            android:background="@drawable/button_color1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Harga Pokok Penjualan"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/resHPP"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="15dp"
+                android:text="Biaya Bahan Baku"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:background="@drawable/field_border"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btCetak"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/btnprimary"
+                android:text=" Cetak"
+                android:drawableLeft="@drawable/file"
+                android:textColor="#FFF"
+                android:layout_marginRight="30dp"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btBack"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/danger_button"
+                android:text=" Kembali"
+                android:drawableLeft="@drawable/back"
+                android:textColor="#FFF"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</ScrollView>
