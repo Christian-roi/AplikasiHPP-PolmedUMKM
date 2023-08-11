@@ -2,8 +2,11 @@ package com.example.apphitungharga;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +26,9 @@ public class MainMenu extends AppCompatActivity {
         btnHistory = findViewById(R.id.btnHistory);
         btnHitungHPP = findViewById(R.id.btnHitungHPP);
         btnKeluar = findViewById(R.id.btnKeluar);
+
+        ActivityCompat.requestPermissions(MainMenu.this, new String[]{
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
 
         btnUmkm.setOnClickListener(new View.OnClickListener() {
             @Override

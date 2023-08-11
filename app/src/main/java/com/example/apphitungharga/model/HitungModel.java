@@ -3,7 +3,7 @@ package com.example.apphitungharga.model;
 public class HitungModel {
     private String  id, nama_umkm,  biayaBakuAwal,  biayaBeliBahan,  biayaTransport , diskon, retur, biayaBakuAkhir,
             biayaPekerjaLngsg, biayaPekerjaTdkLngsg, biayaBhnPenolong, biayaListrik, biayaAir,
-            biayaKomunikasi, biayaPenyusutan, biayaLainnya, biayaProAwal, biayaProAKhir, biayaJadiAwal, biayaJadiAkhir;
+            biayaKomunikasi, biayaPenyusutan, biayaLainnya, biayaProAwal, biayaProAKhir, biayaJadiAwal, biayaJadiAkhir, marginUntung;
 
     public HitungModel(){
 
@@ -169,9 +169,18 @@ public class HitungModel {
         this.biayaJadiAkhir = biayaJadiAkhir;
     }
 
+    public String getMarginUntung() {
+        return marginUntung;
+    }
+
+    public void setMarginUntung(String marginUntung) {
+        this.marginUntung = marginUntung;
+    }
+
     public HitungModel(String id, String nama_umkm, String biayaBakuAwal, String biayaBeliBahan, String biayaTransport , String diskon, String retur, String biayaBakuAkhir,
                        String biayaPekerjaLngsg, String biayaPekerjaTdkLngsg, String biayaBhnPenolong, String biayaListrik, String biayaAir,
-                       String biayaKomunikasi, String biayaPenyusutan, String biayaLainnya, String biayaProAwal, String biayaProAKhir, String biayaJadiAwal, String biayaJadiAkhir){
+                       String biayaKomunikasi, String biayaPenyusutan, String biayaLainnya, String biayaProAwal, String biayaProAKhir, String biayaJadiAwal,
+                       String biayaJadiAkhir, String marginUntung){
         this.id = id;
         this.nama_umkm = nama_umkm;
         this.biayaBakuAwal = biayaBakuAwal;
@@ -192,5 +201,6 @@ public class HitungModel {
         this.biayaProAKhir = biayaProAKhir;
         this.biayaJadiAwal = biayaJadiAwal;
         this.biayaJadiAkhir = biayaJadiAkhir;
+        this.marginUntung = marginUntung;
     }
 }

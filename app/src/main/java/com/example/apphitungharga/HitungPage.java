@@ -1,5 +1,6 @@
 package com.example.apphitungharga;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,7 +20,8 @@ public class HitungPage extends AppCompatActivity {
     Button btnHitung, btnKembali;
     EditText valBakuAwal, valNama, valBakuAkhir, valPekerja, valProAwal, valProAkhir, valJadiAwal
             , valJadiAkhir, valBeliBhn, valTransport, valDiskon, valRetur, valPkrjaTdkLgsg
-            , valListrik, valAir, valPenyusut, valLain2, valKom, valPenolong;
+            , valListrik, valAir, valPenyusut, valLain2, valKom, valPenolong, valMargin;
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,9 @@ public class HitungPage extends AppCompatActivity {
         setContentView(R.layout.activity_hitung_page);
 
         db = new DatabaseHelper(this);
+
+        actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btnKembali = findViewById(R.id.btnKembali);
         btnHitung = findViewById(R.id.btnHitung);
@@ -49,6 +54,7 @@ public class HitungPage extends AppCompatActivity {
         valProAkhir = findViewById(R.id.valProAkhir);
         valJadiAwal =findViewById(R.id.valJadiAwal);
         valJadiAkhir = findViewById(R.id.valJadiAkhir);
+        valMargin = findViewById(R.id.valMargin);
 
         setupEditTextWithThousandSeparator(valBakuAwal);
         setupEditTextWithThousandSeparator(valBeliBhn);
@@ -90,7 +96,7 @@ public class HitungPage extends AppCompatActivity {
                         || valKom.getText().toString().isEmpty() || valLain2.getText().toString().isEmpty()
                         || valPkrjaTdkLgsg.getText().toString().isEmpty() || valProAwal.getText().toString().isEmpty()
                         || valProAkhir.getText().toString().isEmpty() || valJadiAwal.getText().toString().isEmpty()
-                        || valJadiAkhir.getText().toString().isEmpty() || valPenolong.getText().toString().isEmpty();
+                        || valJadiAkhir.getText().toString().isEmpty() || valPenolong.getText().toString().isEmpty() || valMargin.getText().toString().isEmpty();
 
                 if(check){
                     //double biayaBakuAwal = Double.parseDouble(valBakuAwal.getText().toString().replaceAll(",",""));
@@ -115,8 +121,10 @@ public class HitungPage extends AppCompatActivity {
                     String biayaProAkhir = valProAkhir.getText().toString();
                     String biayaJadiAwal = valJadiAwal.getText().toString();
                     String biayaJadiAkhir = valJadiAkhir.getText().toString();
+                    String marginUntung = valMargin.getText().toString();
 
-                    Boolean insertData = db.insertData(nama, biayaBakuAwal, biayaBeliBahan, biayaTransport, diskon, retur, biayaBakuAkhir, biayaPekerja, biayaPkrjaTdkLgsg, biayaBhnPenolong , biayaListrik, biayaAir, biayaKomunikasi, biayaPenyusutan , biayaLain2, biayaProAwal, biayaProAkhir, biayaJadiAwal, biayaJadiAkhir);
+                    Boolean insertData = db.insertData(nama, biayaBakuAwal, biayaBeliBahan, biayaTransport, diskon, retur, biayaBakuAkhir, biayaPekerja, biayaPkrjaTdkLgsg, biayaBhnPenolong , biayaListrik, biayaAir, biayaKomunikasi, biayaPenyusutan , biayaLain2,
+                            biayaProAwal, biayaProAkhir, biayaJadiAwal, biayaJadiAkhir, marginUntung);
                     if(insertData == true){
                         //Hitung Biaya Pembelian Bahan Baku Bersih
                         double nettoBhnBaku = convertToDouble(biayaBeliBahan) + convertToDouble(biayaTransport) - convertToDouble(diskon) - convertToDouble(retur);
@@ -132,6 +140,8 @@ public class HitungPage extends AppCompatActivity {
                         double hargaPokokProduksi = totalProduksi + convertToDouble(biayaProAwal) - convertToDouble(biayaProAkhir);
                         //Hitung Harga Pokok Penjualan
                         double hargaPokokPenjualan = hargaPokokProduksi + convertToDouble(biayaJadiAwal) - convertToDouble(biayaJadiAkhir);
+                        //Hitung Margin Keuntungan
+                        double perkiraanHarga = hargaPokokPenjualan * (1 + (convertToDouble(marginUntung) / 100));
 
                         Intent result  = new Intent(HitungPage.this, ResultPage.class);
                         result.putExtra("namaUmkm", nama);
@@ -142,6 +152,13 @@ public class HitungPage extends AppCompatActivity {
                         result.putExtra("retur",retur);
                         result.putExtra("biayaBakuAkhir",biayaBakuAkhir);
                         result.putExtra("biayaPekerja",biayaPekerja);
+                        result.putExtra("biayaPkrjaTdklngsg", biayaPkrjaTdkLgsg);
+                        result.putExtra("biayaAir", biayaAir);
+                        result.putExtra("biayaListrik", biayaListrik);
+                        result.putExtra("biayaBhnPenolong", biayaBhnPenolong);
+                        result.putExtra("biayaPenyusutan", biayaPenyusutan);
+                        result.putExtra("biayaKomunikasi", biayaKomunikasi);
+                        result.putExtra("biayaLainnya", biayaLain2);
                         result.putExtra("biayaOverheadPabrik",totalBiayaOverheadPabrik);
                         result.putExtra("biayaBahanBaku", biayaBahanBaku);
                         result.putExtra("totalProduksi", totalProduksi);
@@ -151,6 +168,8 @@ public class HitungPage extends AppCompatActivity {
                         result.putExtra("biayaJadiAwal",biayaJadiAwal);
                         result.putExtra("biayaJadiAkhir",biayaJadiAkhir);
                         result.putExtra("hargaPokokPenjualan", hargaPokokPenjualan);
+                        result.putExtra("hargaPerkiraan",perkiraanHarga);
+                        result.putExtra("margin",marginUntung);
                         startActivity(result);
                         finish();
                     }else {
@@ -217,5 +236,11 @@ public class HitungPage extends AppCompatActivity {
             e.printStackTrace();
             return 0.0; // Nilai default jika konversi gagal
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 }

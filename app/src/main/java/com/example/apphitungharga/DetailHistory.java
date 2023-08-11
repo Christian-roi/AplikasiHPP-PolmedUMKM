@@ -1,10 +1,12 @@
 package com.example.apphitungharga;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -44,6 +47,8 @@ public class DetailHistory extends AppCompatActivity {
         TextView resPokPro = findViewById(R.id.resPokPro);
         TextView resHPP = findViewById(R.id.resHPP);
         TextView nama = findViewById(R.id.valNama);
+        TextView resHarga = findViewById(R.id.resHarga);
+        TextView valMargin = findViewById(R.id.valMargin);
         Button btCetak = findViewById(R.id.btCetak);
         Button btBack = findViewById(R.id.btBack);
 
@@ -72,6 +77,7 @@ public class DetailHistory extends AppCompatActivity {
                 String biayaProAkhir = cursor.getString(cursor.getColumnIndexOrThrow("biayaProAkhir"));
                 String biayaJadiAwal = cursor.getString(cursor.getColumnIndexOrThrow("biayaJadiAwal"));
                 String biayaJadiAkhir = cursor.getString(cursor.getColumnIndexOrThrow("biayaJadiAkhir"));
+                String marginUntung = cursor.getString(cursor.getColumnIndexOrThrow("marginUntung"));
 
                 //Hitung Biaya Pembelian Bahan Baku Bersih
                 double nettoBhnBaku = convertToDouble(biayaBeliBahan) + convertToDouble(biayaTransport) - convertToDouble(diskon) - convertToDouble(retur);
@@ -87,12 +93,17 @@ public class DetailHistory extends AppCompatActivity {
                 double hargaPokokProduksi = totalProduksi + convertToDouble(biayaProAwal) - convertToDouble(biayaProAkhir);
                 //Hitung Harga Pokok Penjualan
                 double hargaPokokPenjualan = hargaPokokProduksi + convertToDouble(biayaJadiAwal) - convertToDouble(biayaJadiAkhir);
+                //Hitung Margin Keuntungan
+                double perkiraanHarga = hargaPokokPenjualan * (1 + (convertToDouble(marginUntung) / 100));
+                double harga = Double.parseDouble(formatDoubleWithTwoDecimalPlaces(perkiraanHarga).replaceAll(",",""));
 
                 nama.setText(nama_umkm);
                 resBahanBaku.setText(formatUang(biayaBahanBaku));
                 resProduksi.setText(formatUang(totalProduksi));
                 resPokPro.setText(formatUang(hargaPokokProduksi));
                 resHPP.setText(formatUang(hargaPokokPenjualan));
+                resHarga.setText(formatUang(harga));
+                valMargin.setText("Perkiraan Harga (Margin: "+marginUntung+"%)");
 
             }while (cursor.moveToNext());
         }
@@ -100,6 +111,7 @@ public class DetailHistory extends AppCompatActivity {
         btCetak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //openDownloadFolder();
                 try {
                     createPDF();
                 } catch (FileNotFoundException e) {
@@ -129,9 +141,24 @@ public class DetailHistory extends AppCompatActivity {
         }
     }
 
+    public static String formatDoubleWithTwoDecimalPlaces(double value) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return df.format(value);
+    }
+
+    public int convertStringToInt(String str) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            // Handle jika string tidak bisa diubah menjadi integer
+            e.printStackTrace();
+            return 0; // Nilai default jika konversi gagal
+        }
+    }
+
     private String formatUang(double nominal) {
-        DecimalFormat decimalFormat = new DecimalFormat("#,##0.-");
-        return "Rp. " + decimalFormat.format(nominal);
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.##");
+        return "Rp. " + decimalFormat.format(nominal) + ".-";
     }
 
     private void createPDF() throws FileNotFoundException {
@@ -161,6 +188,7 @@ public class DetailHistory extends AppCompatActivity {
                 String biayaProAkhir = cursor.getString(cursor.getColumnIndexOrThrow("biayaProAkhir"));
                 String biayaJadiAwal = cursor.getString(cursor.getColumnIndexOrThrow("biayaJadiAwal"));
                 String biayaJadiAkhir = cursor.getString(cursor.getColumnIndexOrThrow("biayaJadiAkhir"));
+                String marginUntung = cursor.getString(cursor.getColumnIndexOrThrow("marginUntung"));
 
                 //Hitung Biaya Pembelian Bahan Baku Bersih
                 double nettoBhnBaku = convertToDouble(biayaBeliBahan) + convertToDouble(biayaTransport) - convertToDouble(diskon) - convertToDouble(retur);
@@ -176,6 +204,9 @@ public class DetailHistory extends AppCompatActivity {
                 double hargaPokokProduksi = totalProduksi + convertToDouble(biayaProAwal) - convertToDouble(biayaProAkhir);
                 //Hitung Harga Pokok Penjualan
                 double hargaPokokPenjualan = hargaPokokProduksi + convertToDouble(biayaJadiAwal) - convertToDouble(biayaJadiAkhir);
+                //Hitung Margin Keuntungan
+                double perkiraanHarga = hargaPokokPenjualan * (1 + (convertToDouble(marginUntung) / 100));
+                double harga = Double.parseDouble(formatDoubleWithTwoDecimalPlaces(perkiraanHarga).replaceAll(",",""));
 
                 // Lokasi untuk menyimpan file PDF
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -194,7 +225,7 @@ public class DetailHistory extends AppCompatActivity {
                     document.add(title);
                     // Tambahkan tabel untuk data perhitungan
                     PdfPTable table = new PdfPTable(2);
-                    table.setWidthPercentage(80);
+                    table.setWidthPercentage(100);
                     table.setSpacingBefore(20f);
                     table.setSpacingAfter(20f);
                     // Tambahkan header tabel
@@ -210,40 +241,79 @@ public class DetailHistory extends AppCompatActivity {
                     table.addCell(formatUang(Double.parseDouble(biayaBeliBahan.replaceAll(",",""))));
                     table.addCell("Biaya Transport");
                     table.addCell(formatUang(Double.parseDouble(biayaTransport.replaceAll(",",""))));
-                    table.addCell("Diskom");
+                    table.addCell("Diskon");
                     table.addCell(formatUang(Double.parseDouble(diskon.replaceAll(",",""))));
                     table.addCell("Retur");
                     table.addCell(formatUang(Double.parseDouble(retur.replaceAll(",",""))));
                     table.addCell("Biaya Bahan Baku Akhir");
                     table.addCell(formatUang(Double.parseDouble(biayaBakuAkhir.replaceAll(",",""))));
-                    table.addCell("Biaya Bahan Baku");
-                    table.addCell(formatUang(biayaBahanBaku));
+                    table.addCell(createCell("Biaya Pemakaian Bahan Baku", BaseColor.YELLOW));
+                    table.addCell(createCell(formatUang(biayaBahanBaku), BaseColor.YELLOW));
                     table.addCell("Biaya Pekerja");
                     table.addCell(formatUang(Double.parseDouble(biayaPekerja.replaceAll(",",""))));
-                    table.addCell("Total Biaya Overhead Pabrik (Air, Listrik, Komunikasi, Dll)");
-                    table.addCell(formatUang(totalBiayaOverheadPabrik));
-                    table.addCell("Total Biaya Produksi");
-                    table.addCell(formatUang(totalProduksi));
+                    table.addCell("Biaya Pekerja Tidak Langsung");
+                    table.addCell(formatUang(Double.parseDouble(biayaPkrjaTdkLgsg.replaceAll(",",""))));
+                    table.addCell("Biaya Listrik");
+                    table.addCell(formatUang(Double.parseDouble(biayaListrik.replaceAll(",",""))));
+                    table.addCell("Biaya Air");
+                    table.addCell(formatUang(Double.parseDouble(biayaAir.replaceAll(",",""))));
+                    table.addCell("Biaya Penyusutan");
+                    table.addCell(formatUang(Double.parseDouble(biayaPenyusutan.replaceAll(",",""))));
+                    table.addCell("Biaya Komunikasi");
+                    table.addCell(formatUang(Double.parseDouble(biayaKomunikasi.replaceAll(",",""))));
+                    table.addCell("Biaya Bahan Penolong");
+                    table.addCell(formatUang(Double.parseDouble(biayaBhnPenolong.replaceAll(",",""))));
+                    table.addCell("Biaya Lainnya");
+                    table.addCell(formatUang(Double.parseDouble(biayaLain2.replaceAll(",",""))));
+                    table.addCell(createCell("Total Biaya Overhead Pabrik", BaseColor.YELLOW));
+                    table.addCell(createCell(formatUang(totalBiayaOverheadPabrik), BaseColor.YELLOW));
+                    table.addCell(createCell("Total Biaya Produksi",BaseColor.YELLOW));
+                    table.addCell(createCell(formatUang(totalProduksi),BaseColor.YELLOW));
                     table.addCell("Persediaan Barang dalam Proses Awal");
                     table.addCell(formatUang(Double.parseDouble(biayaProAwal.replaceAll(",",""))));
                     table.addCell("Persediaan Barang dalam Proses Akhir");
                     table.addCell(formatUang(Double.parseDouble(biayaProAkhir.replaceAll(",",""))));
-                    table.addCell("Harga Pokok Produksi");
-                    table.addCell(formatUang(hargaPokokProduksi));
+                    table.addCell(createCell("Harga Pokok Produksi",BaseColor.YELLOW));
+                    table.addCell(createCell(formatUang(hargaPokokProduksi), BaseColor.YELLOW));
                     table.addCell("Persediaan Barang Jadi Awal");
                     table.addCell(formatUang(Double.parseDouble(biayaJadiAwal.replaceAll(",",""))));
                     table.addCell("Persediaan Barang Jadi Akhir");
                     table.addCell(formatUang(Double.parseDouble(biayaJadiAkhir.replaceAll(",",""))));
-                    table.addCell("Harga Pokok Penjualan");
-                    table.addCell(formatUang(hargaPokokPenjualan));
+                    table.addCell(createCell("Harga Pokok Pejualan", BaseColor.YELLOW));
+                    table.addCell(createCell(formatUang(hargaPokokPenjualan), BaseColor.YELLOW));
+                    table.addCell("Margin Keuntungan ");
+                    table.addCell(marginUntung+"%");
+                    table.addCell(createCell("Perkiraan Harga Jual",BaseColor.YELLOW));
+                    table.addCell(createCell(formatUang(harga),BaseColor.YELLOW));
                     document.add(table);
                     document.close();
                     // Beritahu pengguna bahwa file PDF telah dibuat
                     Toast.makeText(this, "File PDF telah dibuat", Toast.LENGTH_SHORT).show();
+                    openPDF(file);
                 } catch (DocumentException e) {
                     e.printStackTrace();
                 }
             }while (cursor.moveToNext());
+        }
+    }
+
+    private static PdfPCell createCell(String text, BaseColor color) {
+        PdfPCell cell = new PdfPCell(new Phrase(text));
+        cell.setBackgroundColor(color);
+        return cell;
+    }
+
+    private void openPDF(File pdfFile) {
+        Uri pdfUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", pdfFile);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(pdfUri, "application/pdf");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
