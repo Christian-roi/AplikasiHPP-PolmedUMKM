@@ -70,7 +70,7 @@ public class ResultPage extends AppCompatActivity {
         double hargaPokokProduksi = getIntent().getDoubleExtra("hargaPokokProduksi", 0.0);
         double hargaPokokPenjualan = getIntent().getDoubleExtra("hargaPokokPenjualan", 0.0);
         double hargaPerkiraan = getIntent().getDoubleExtra("hargaPerkiraan",0.0);
-        int margin = getIntent().getIntExtra("margin",0);
+        String margin = getIntent().getStringExtra("margin");
 
         //Tampilkan semua nilai
         nama.setText(namaUmkm);
