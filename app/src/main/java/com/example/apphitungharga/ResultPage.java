@@ -139,6 +139,8 @@ public class ResultPage extends AppCompatActivity {
         String biayaJadiAwal = getIntent().getStringExtra("biayaJadiAwal");
         String biayaJadiAkhir = getIntent().getStringExtra("biayaJadiAkhir");
         String margin = getIntent().getStringExtra("margin");
+        String totalUnitProduksi = getIntent().getStringExtra("totalUnitProduksi");
+        double hargaPerUnit = getIntent().getDoubleExtra("hargaPerUnit",0.0);
         double harga = getIntent().getDoubleExtra("hargaPerkiraan",0.0);
 
         // Lokasi untuk menyimpan file PDF
@@ -216,8 +218,12 @@ public class ResultPage extends AppCompatActivity {
             table.addCell(createCell(formatUang(hargaPokokPenjualan), BaseColor.YELLOW));
             table.addCell("Margin Keuntungan ");
             table.addCell(margin+"%");
-            table.addCell(createCell("Perkiraan Harga Jual",BaseColor.YELLOW));
+            table.addCell(createCell("Perkiraan Margin Keuntungan",BaseColor.YELLOW));
             table.addCell(createCell(formatUang(harga),BaseColor.YELLOW));
+            table.addCell("Total Unit Produksi ");
+            table.addCell(totalUnitProduksi+" Unit");
+            table.addCell(createCell("Harga Pokok Per Unit",BaseColor.YELLOW));
+            table.addCell(createCell(formatUang(hargaPerUnit), BaseColor.YELLOW));
             document.add(table);
             document.close();
             // Beritahu pengguna bahwa file PDF telah dibuat
