@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "db_hitungapp.db";
+    private static final String DB_NAME = "hitungapphpp.db";
     private static final int DB_VERSION = 1;
     //private static final String PREF_USER_ID = "user_id";
     //private SharedPreferences sharedPreferences;
@@ -30,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, nama text, userid text, j_kelamin text, password text, role text)");
         db.execSQL("CREATE TABLE tabel_hitung(id INTEGER PRIMARY KEY AUTOINCREMENT, nama_umkm text, biayaBakuAwal text,biayaBeliBahan text, biayaTransport text, diskon text, retur text, biayaBakuAkhir text, biayaPekerjaLngsg text, " +
                 "biayaPekerjaTdkLngsg text, biayaBhnPenolong text, biayaListrik text, biayaAir text, biayaKomunikasi text, biayaPenyusutan text, biayaLainnya text, biayaProAwal text, biayaProAkhir text, " +
-                "biayaJadiAwal text, biayaJadiAkhir text, marginUntung text)");
+                "biayaJadiAwal text, biayaJadiAkhir text, marginUntung text, totalUnitProduksi text)");
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Boolean insertData(String nama_umkm, String biayaBakuAwal, String biayaBeliBahan, String biayaTransport ,String diskon,String retur,String biayaBakuAkhir,
                               String biayaPekerjaLngsg,String biayaPekerjaTdkLngsg,String biayaBhnPenolong,String biayaListrik,String biayaAir,
                               String biayaKomunikasi,String biayaPenyusutan,String biayaLainnya,String biayaProAwal,String biayaProAKhir,
-                              String biayaJadiAwal,String biayaJadiAkhir, String marginUntung){
+                              String biayaJadiAwal,String biayaJadiAkhir, String marginUntung, String totalUnitProduksi){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         //Field-field Data
@@ -68,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("biayaJadiAwal", biayaJadiAwal);
         contentValues.put("biayaJadiAkhir", biayaJadiAkhir);
         contentValues.put("marginUntung", marginUntung);
+        contentValues.put("totalUnitProduksi", totalUnitProduksi);
         long insert = db.insert("tabel_hitung", null, contentValues);
         if(insert == -1){
             return false;
@@ -104,10 +105,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 map.put("biayaJadiAwal", cursor.getString(18));
                 map.put("biayaJadiAkhir", cursor.getString(19));
                 map.put("marginUntung",cursor.getString(20));
+                map.put("totalUnitProduksi",cursor.getString(21));
                 list.add(map);
             }while (cursor.moveToNext());
         }
         cursor.close();
         return list;
+    }
+
+    // Fungsi untuk menghapus data berdasarkan ID
+    public boolean deleteDataById(String tableName, int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(tableName, "id=?", new String[]{String.valueOf(id)}) > 0;
     }
 }

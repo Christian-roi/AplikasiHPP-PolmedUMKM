@@ -2,11 +2,14 @@ package com.example.apphitungharga;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.apphitungharga.adapter.HitungAdapter;
 import com.example.apphitungharga.model.HitungModel;
@@ -42,6 +45,40 @@ public class HistoryListPage extends AppCompatActivity {
                 Intent intent = new Intent(HistoryListPage.this, DetailHistory.class);
                 intent.putExtra("id",Integer.parseInt(idx));
                 startActivity(intent);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                String idx = lists.get(position).getId(); // Ambil ID dari item di posisi yang di-klik
+                builder.setMessage("Apakah Anda yakin ingin menghapus perhitungan ini?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Hapus item dari database
+                                DatabaseHelper dbHelper = new DatabaseHelper(HistoryListPage.this);
+                                boolean success = dbHelper.deleteDataById("tabel_hitung", Integer.parseInt(idx));
+
+                                if (success) {
+                                    // Hapus item dari list data sumber
+                                    lists.remove(position);
+                                    // Beritahu adapter bahwa data telah berubah
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(HistoryListPage.this, "Perhitungan dihapus", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(HistoryListPage.this, "Gagal menghapus item", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
             }
         });
 

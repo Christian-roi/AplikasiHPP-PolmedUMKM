@@ -48,7 +48,9 @@ public class DetailHistory extends AppCompatActivity {
         TextView resHPP = findViewById(R.id.resHPP);
         TextView nama = findViewById(R.id.valNama);
         TextView resHarga = findViewById(R.id.resHarga);
+        TextView resHargaPerUnit = findViewById(R.id.resPerUnit);
         TextView valMargin = findViewById(R.id.valMargin);
+        TextView valTotalUnit = findViewById(R.id.valTotalUnit);
         Button btCetak = findViewById(R.id.btCetak);
         Button btBack = findViewById(R.id.btBack);
 
@@ -78,6 +80,7 @@ public class DetailHistory extends AppCompatActivity {
                 String biayaJadiAwal = cursor.getString(cursor.getColumnIndexOrThrow("biayaJadiAwal"));
                 String biayaJadiAkhir = cursor.getString(cursor.getColumnIndexOrThrow("biayaJadiAkhir"));
                 String marginUntung = cursor.getString(cursor.getColumnIndexOrThrow("marginUntung"));
+                String totalUnitProduksi = cursor.getString(cursor.getColumnIndexOrThrow("totalUnitProduksi"));
 
                 //Hitung Biaya Pembelian Bahan Baku Bersih
                 double nettoBhnBaku = convertToDouble(biayaBeliBahan) + convertToDouble(biayaTransport) - convertToDouble(diskon) - convertToDouble(retur);
@@ -94,7 +97,9 @@ public class DetailHistory extends AppCompatActivity {
                 //Hitung Harga Pokok Penjualan
                 double hargaPokokPenjualan = hargaPokokProduksi + convertToDouble(biayaJadiAwal) - convertToDouble(biayaJadiAkhir);
                 //Hitung Margin Keuntungan
-                double perkiraanHarga = hargaPokokPenjualan * (1 + (convertToDouble(marginUntung) / 100));
+                double perkiraanHarga = hargaPokokPenjualan / (1 - (convertToDouble(marginUntung) / 100));
+                //Hitung Harga Per Unit
+                double hargaPerUnit = hargaPokokProduksi / convertToDouble(totalUnitProduksi);
                 double harga = Double.parseDouble(formatDoubleWithTwoDecimalPlaces(perkiraanHarga).replaceAll(",",""));
 
                 nama.setText(nama_umkm);
@@ -103,7 +108,9 @@ public class DetailHistory extends AppCompatActivity {
                 resPokPro.setText(formatUang(hargaPokokProduksi));
                 resHPP.setText(formatUang(hargaPokokPenjualan));
                 resHarga.setText(formatUang(harga));
-                valMargin.setText("Perkiraan Harga (Margin: "+marginUntung+"%)");
+                resHargaPerUnit.setText(formatUang(hargaPerUnit));
+                valMargin.setText("Margin Keuntungan ("+marginUntung+"%)");
+                valTotalUnit.setText("Harga Pokok Per Unit ("+totalUnitProduksi+" Unit)");
 
             }while (cursor.moveToNext());
         }
@@ -189,6 +196,7 @@ public class DetailHistory extends AppCompatActivity {
                 String biayaJadiAwal = cursor.getString(cursor.getColumnIndexOrThrow("biayaJadiAwal"));
                 String biayaJadiAkhir = cursor.getString(cursor.getColumnIndexOrThrow("biayaJadiAkhir"));
                 String marginUntung = cursor.getString(cursor.getColumnIndexOrThrow("marginUntung"));
+                String totalUnitProduksi = cursor.getString(cursor.getColumnIndexOrThrow("totalUnitProduksi"));
 
                 //Hitung Biaya Pembelian Bahan Baku Bersih
                 double nettoBhnBaku = convertToDouble(biayaBeliBahan) + convertToDouble(biayaTransport) - convertToDouble(diskon) - convertToDouble(retur);
@@ -205,8 +213,10 @@ public class DetailHistory extends AppCompatActivity {
                 //Hitung Harga Pokok Penjualan
                 double hargaPokokPenjualan = hargaPokokProduksi + convertToDouble(biayaJadiAwal) - convertToDouble(biayaJadiAkhir);
                 //Hitung Margin Keuntungan
-                double perkiraanHarga = hargaPokokPenjualan * (1 + (convertToDouble(marginUntung) / 100));
+                double perkiraanHarga = hargaPokokPenjualan / (1 - (convertToDouble(marginUntung) / 100));
                 double harga = Double.parseDouble(formatDoubleWithTwoDecimalPlaces(perkiraanHarga).replaceAll(",",""));
+                //Hitung Harga Per Unit
+                double hargaPerUnit = hargaPokokProduksi / convertToDouble(totalUnitProduksi);
 
                 // Lokasi untuk menyimpan file PDF
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -283,8 +293,12 @@ public class DetailHistory extends AppCompatActivity {
                     table.addCell(createCell(formatUang(hargaPokokPenjualan), BaseColor.YELLOW));
                     table.addCell("Margin Keuntungan ");
                     table.addCell(marginUntung+"%");
-                    table.addCell(createCell("Perkiraan Harga Jual",BaseColor.YELLOW));
+                    table.addCell(createCell("Perkiraan Margin Keuntungan",BaseColor.YELLOW));
                     table.addCell(createCell(formatUang(harga),BaseColor.YELLOW));
+                    table.addCell("Total Unit Produksi ");
+                    table.addCell(totalUnitProduksi+" Unit");
+                    table.addCell(createCell("Harga Pokok Per Unit",BaseColor.YELLOW));
+                    table.addCell(createCell(formatUang(hargaPerUnit), BaseColor.YELLOW));
                     document.add(table);
                     document.close();
                     // Beritahu pengguna bahwa file PDF telah dibuat

@@ -59,7 +59,9 @@ public class ResultPage extends AppCompatActivity {
         TextView resHPP = findViewById(R.id.resHPP);
         TextView nama = findViewById(R.id.valNama);
         TextView resHarga = findViewById(R.id.resHarga);
+        TextView resHargaPerUnit = findViewById(R.id.resHargaPerUnit);
         TextView valMargin = findViewById(R.id.valMargin);
+        TextView valTotalUnit = findViewById(R.id.valTotalUnit);
         Button btCetak = findViewById(R.id.btCetak);
         Button btBack = findViewById(R.id.btBack);
 
@@ -70,7 +72,9 @@ public class ResultPage extends AppCompatActivity {
         double hargaPokokProduksi = getIntent().getDoubleExtra("hargaPokokProduksi", 0.0);
         double hargaPokokPenjualan = getIntent().getDoubleExtra("hargaPokokPenjualan", 0.0);
         double hargaPerkiraan = getIntent().getDoubleExtra("hargaPerkiraan",0.0);
+        double hargaPerUnit = getIntent().getDoubleExtra("hargaPerUnit",0.0);
         String margin = getIntent().getStringExtra("margin");
+        String totalUnitProduksi = getIntent().getStringExtra("totalUnitProduksi");
 
         //Tampilkan semua nilai
         nama.setText(namaUmkm);
@@ -79,7 +83,9 @@ public class ResultPage extends AppCompatActivity {
         resPokPro.setText(formatUang(hargaPokokProduksi));
         resHPP.setText(formatUang(hargaPokokPenjualan));
         resHarga.setText(formatUang(hargaPerkiraan));
-        valMargin.setText("Perkiraan Harga (Margin: "+margin+"%)");
+        resHargaPerUnit.setText(formatUang(hargaPerUnit));
+        valMargin.setText("Margin Keuntungan ("+margin+"%)");
+        valTotalUnit.setText("Harga Pokok Per Unit ("+totalUnitProduksi+" Unit)");
 
         btCetak.setOnClickListener(new View.OnClickListener() {
             @Override

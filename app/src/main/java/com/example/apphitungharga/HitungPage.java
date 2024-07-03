@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class HitungPage extends AppCompatActivity {
 
@@ -20,7 +22,7 @@ public class HitungPage extends AppCompatActivity {
     Button btnHitung, btnKembali;
     EditText valBakuAwal, valNama, valBakuAkhir, valPekerja, valProAwal, valProAkhir, valJadiAwal
             , valJadiAkhir, valBeliBhn, valTransport, valDiskon, valRetur, valPkrjaTdkLgsg
-            , valListrik, valAir, valPenyusut, valLain2, valKom, valPenolong, valMargin;
+            , valListrik, valAir, valPenyusut, valLain2, valKom, valPenolong, valMargin, valTotalUnit;
     ActionBar actionBar;
 
     @Override
@@ -55,6 +57,7 @@ public class HitungPage extends AppCompatActivity {
         valJadiAwal =findViewById(R.id.valJadiAwal);
         valJadiAkhir = findViewById(R.id.valJadiAkhir);
         valMargin = findViewById(R.id.valMargin);
+        valTotalUnit = findViewById(R.id.valTotalUnit);
 
         setupEditTextWithThousandSeparator(valBakuAwal);
         setupEditTextWithThousandSeparator(valBeliBhn);
@@ -96,11 +99,14 @@ public class HitungPage extends AppCompatActivity {
                         || valKom.getText().toString().isEmpty() || valLain2.getText().toString().isEmpty()
                         || valPkrjaTdkLgsg.getText().toString().isEmpty() || valProAwal.getText().toString().isEmpty()
                         || valProAkhir.getText().toString().isEmpty() || valJadiAwal.getText().toString().isEmpty()
-                        || valJadiAkhir.getText().toString().isEmpty() || valPenolong.getText().toString().isEmpty() || valMargin.getText().toString().isEmpty();
+                        || valJadiAkhir.getText().toString().isEmpty() || valPenolong.getText().toString().isEmpty() || valMargin.getText().toString().isEmpty()
+                        || valTotalUnit.getText().toString().isEmpty();
 
                 if(check){
                     //double biayaBakuAwal = Double.parseDouble(valBakuAwal.getText().toString().replaceAll(",",""));
+                    //String biayaBakuAwal = valBakuAwal.getText().toString();
                     Toast.makeText(HitungPage.this, "Harap isi seluruh kolom sesuai dengan Nominal atau 0.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(HitungPage.this, "Isi: "+convertToDouble(biayaBakuAwal), Toast.LENGTH_SHORT).show();
                 }else{
                     String nama = valNama.getText().toString();
                     String biayaBakuAwal = valBakuAwal.getText().toString();
@@ -122,9 +128,10 @@ public class HitungPage extends AppCompatActivity {
                     String biayaJadiAwal = valJadiAwal.getText().toString();
                     String biayaJadiAkhir = valJadiAkhir.getText().toString();
                     String marginUntung = valMargin.getText().toString();
+                    String totalUnitProduksi = valTotalUnit.getText().toString();
 
                     Boolean insertData = db.insertData(nama, biayaBakuAwal, biayaBeliBahan, biayaTransport, diskon, retur, biayaBakuAkhir, biayaPekerja, biayaPkrjaTdkLgsg, biayaBhnPenolong , biayaListrik, biayaAir, biayaKomunikasi, biayaPenyusutan , biayaLain2,
-                            biayaProAwal, biayaProAkhir, biayaJadiAwal, biayaJadiAkhir, marginUntung);
+                            biayaProAwal, biayaProAkhir, biayaJadiAwal, biayaJadiAkhir, marginUntung, totalUnitProduksi);
                     if(insertData == true){
                         //Hitung Biaya Pembelian Bahan Baku Bersih
                         double nettoBhnBaku = convertToDouble(biayaBeliBahan) + convertToDouble(biayaTransport) - convertToDouble(diskon) - convertToDouble(retur);
@@ -141,7 +148,9 @@ public class HitungPage extends AppCompatActivity {
                         //Hitung Harga Pokok Penjualan
                         double hargaPokokPenjualan = hargaPokokProduksi + convertToDouble(biayaJadiAwal) - convertToDouble(biayaJadiAkhir);
                         //Hitung Margin Keuntungan
-                        double perkiraanHarga = hargaPokokPenjualan * (1 + (convertToDouble(marginUntung) / 100));
+                        double perkiraanHarga = hargaPokokPenjualan / (1 - (convertToDouble(marginUntung) / 100));
+                        //Hitung Harga Per Unit
+                        double hargaPerUnit = hargaPokokProduksi / convertToDouble(totalUnitProduksi);
 
                         Intent result  = new Intent(HitungPage.this, ResultPage.class);
                         result.putExtra("namaUmkm", nama);
@@ -170,6 +179,8 @@ public class HitungPage extends AppCompatActivity {
                         result.putExtra("hargaPokokPenjualan", hargaPokokPenjualan);
                         result.putExtra("hargaPerkiraan",perkiraanHarga);
                         result.putExtra("margin",marginUntung);
+                        result.putExtra("totalUnitProduksi", totalUnitProduksi);
+                        result.putExtra("hargaPerUnit", hargaPerUnit);
                         startActivity(result);
                         finish();
                     }else {
@@ -183,9 +194,10 @@ public class HitungPage extends AppCompatActivity {
 
     }
 
-    private void setupEditTextWithThousandSeparator(EditText editText) {
-        final DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
+    private void setupEditTextWithThousandSeparator(final EditText editText) {
+        final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
+        decimalFormat.applyPattern("#,###");
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -200,25 +212,58 @@ public class HitungPage extends AppCompatActivity {
                 editText.removeTextChangedListener(this);
 
                 String originalText = editable.toString();
+                if (!originalText.isEmpty()) {
+                    // Remove all non-digit characters
+                    String cleanText = originalText.replaceAll("[^0-9]", "");
 
-                if (!originalText.isEmpty() && !originalText.equals(",")) {
-                    // Hapus pemisah ribuan yang ada sebelumnya (,)
-                    String cleanText = originalText.replace(",", "");
+                    if (!cleanText.isEmpty()) {
+                        // Parse the cleaned text to a long value
+                        long value = Long.parseLong(cleanText);
 
-                    // Konversi ke bilangan bulat untuk menghilangkan angka desimal
-                    long value = Long.parseLong(cleanText);
-
-                    // Format angka dan tambahkan pemisah ribuan
-                    String formattedText = decimalFormat.format(value);
-
-                    editText.setText(formattedText);
-                    editText.setSelection(formattedText.length());
+                        // Format the value with thousand separators
+                        String formattedText = decimalFormat.format(value);
+                        editText.setText(formattedText);
+                        editText.setSelection(formattedText.length());
+                    }
                 }
 
                 editText.addTextChangedListener(this);
             }
         });
     }
+
+
+//    private void setupEditTextWithThousandSeparator(EditText editText) {
+//        final DecimalFormat decimalFormat = new DecimalFormat("#,###");
+//
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                editText.removeTextChangedListener(this);
+//                String originalText = editable.toString();
+//                if (!originalText.isEmpty() && !originalText.equals(",")) {
+//                    // Hapus pemisah ribuan yang ada sebelumnya (,)
+//                    String cleanText = originalText.replace(",", "");
+//                    // Konversi ke bilangan bulat untuk menghilangkan angka desimal
+//                    long value = Long.parseLong(cleanText);
+//                    // Format angka dan tambahkan pemisah ribuan
+//                    String formattedText = decimalFormat.format(value);
+//                    editText.setText(formattedText);
+//                    editText.setSelection(formattedText.length());
+//                    editText.setSelection(editText.getText().length()); // Move cursor to the end
+//                    editText.addTextChangedListener(this);
+//                }
+//            }
+//        });
+//    }
 
     @Override
     public void onBackPressed() {
